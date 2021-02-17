@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+
+//
+
+body{
+  padding: 50px 0;
+  background-color: #f3f3f3 !important;
+}
+
+.page{
+ &.home{
+   .page-title{
+     .svg{
+       width: 60px;
+       height: 70px;
+       margin-right: 10px;
+     }
+     span{
+
+     }
+   }
+   .example-form{
+     .example-full-width{
+       width: 85% !important;
+       margin-right: 10px;
+     }
+   }
+ }
+}
+
+/*html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }*/
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";

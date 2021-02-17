@@ -1,0 +1,89 @@
+<div class="page home">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h2 class="page-title">
+          <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent" class="svg">bookmarks</mat-icon>
+          <span>Todo List App</span>
+        </h2>
+      </div>
+      <div class="col-md-6">
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Yapılacak Yeni Madde..</mat-label>
+            <input matInput placeholder="Yapılacak Yeni Madde.." #newTodo>
+          </mat-form-field>
+          <button mat-raised-button color="primary" type="submit" (click)="addTodo(newTodo)">Ekle</button>
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <mat-card class="d-flex">
+          <div class="example-container">
+            <h4>Yapılacaklar</h4>
+
+            <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [cdkDropListData]="data.todo"
+              [cdkDropListConnectedTo]="[doneList, doList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of data.todo" cdkDrag>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg">access_time</mat-icon>
+                {{item}}
+              </div>
+            </div>
+          </div>
+
+          <div class="example-container">
+            <h4>Yapılanlar</h4>
+
+            <div
+              cdkDropList
+              #doList="cdkDropList"
+              [cdkDropListData]="data.do"
+              [cdkDropListConnectedTo]="[doneList,todoList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of data.do; let i = index" cdkDrag>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg">hourglass_bottom</mat-icon>
+                {{item}}
+
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg-dropdown" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="deleteItems('do',item, i)"><mat-icon aria-hidden="false" aria-label="Example home icon" color="accent">delete </mat-icon>delete</button>
+                  <!--<button mat-menu-item>Item 2</button>-->
+                </mat-menu>
+              </div>
+            </div>
+          </div>
+
+          <div class="example-container">
+            <h4>Bitenler</h4>
+
+            <div
+              cdkDropList
+              #doneList="cdkDropList"
+              [cdkDropListData]="data.done"
+              [cdkDropListConnectedTo]="[todoList, doList]"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let item of data.done" cdkDrag>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg">done_outline</mat-icon>
+                {{item}}
+              </div>
+            </div>
+          </div>
+        </mat-card>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 text-center mt-5">
+        <small> Copyright 2021 todoApp</small>
+      </div>
+    </div>
+  </div>
+</div>
