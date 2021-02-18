@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {TodoService} from '../../services/todo.service';
 
 
 @Component({
@@ -12,24 +13,18 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class HomeComponent implements OnInit {
 
   data = {
-    todo: [
-      'Get to work',
-      'Pick up groceries'
+    pendings: [
+      {id: 0, todo: ''}
     ],
-    do: [
-      'Go home',
-      'Fall asleep'
+    inProgress: [
+      {id: 0, todo: ''}
     ],
     done: [
-      'Get up',
-      'Brush teeth',
-      'Take a shower',
-      'Check e-mail',
-      'Walk dog'
+      {id: 0, todo: ''}
     ]
   };
 
-  constructor(private _snackBar: MatSnackBar) {
+  constructor(private _snackBar: MatSnackBar, private todoService: TodoService) {
   }
 
   openSnackBar(message: string, action: string) {
@@ -41,10 +36,11 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setItems();
+    // this.setItems();
+    this.getAllTodo();
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<any>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -52,43 +48,60 @@ export class HomeComponent implements OnInit {
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      Object.keys(this.data).forEach((key: string) => {
-        // @ts-ignore
-        localStorage.setItem(key, JSON.stringify(this.data[key]));
-
-      });
+      this.updateItems(this.data);
     }
   }
 
   addTodo(todo: any) {
-    this.data.todo.push(todo.value);
-    todo.value = '';
-    localStorage.setItem('todo', JSON.stringify(this.data.todo));
+    const obj = {todo: todo.value};
+    this.todoService.addTodo(obj)
+      .subscribe((res) => {
+          console.log(res);
+          this.getAllTodo();
+        },
+        (error) => {
+          console.log(error);
+        });
   }
 
-  setItems() {
+  getAllTodo() {
+    this.todoService.getAllTodo()
+      .subscribe((res) => {
+          Object.keys(res).forEach((key) => {
+            // @ts-ignore
+            this.data[key] = res[key];
+          });
 
-    Object.keys(this.data).forEach((key: string) => {
+        },
+        (error) => {
+          console.log(error);
+        });
+  }
 
-      if (!localStorage.getItem(key)) {
-        // @ts-ignore
-        localStorage.setItem(key, JSON.stringify(this.data[key]));
-      } else {
-        // @ts-ignore
-        this.data[key] = JSON.parse(localStorage.getItem(key) || '');
-      }
-    });
+  updateItems(obj: any) {
+
+    this.todoService.updateTodo(obj)
+      .subscribe((res) => {
+          console.log(res);
+          this.getAllTodo();
+        },
+        (error) => {
+          console.log(error);
+        });
 
   }
 
-  deleteItems(key: string, index: number) {
-    // @ts-ignore
-    this.data[key].splice(index, 1);
+  deleteItems(index: number) {
 
-    // @ts-ignore
-    localStorage.setItem(key, JSON.stringify(this.data[key]));
-
-    this.openSnackBar('Görev silindi', 'Kapat');
+    this.todoService.removeTodo(index)
+      .subscribe((res) => {
+          console.log(res);
+          this.getAllTodo();
+          this.openSnackBar('iş parçacığı silindi', 'Kapat');
+        },
+        (error) => {
+          console.log(error);
+        });
   }
 
 }

@@ -33,6 +33,17 @@
   cursor: move;
   background: white;
   font-size: 14px;
+
+  /*.button{
+    opacity: 0;
+    transition: .3s;
+  }
+  &:hover{
+    .button{
+      opacity: 1;
+    }
+
+  }*/
 }
 
 .cdk-drag-preview {

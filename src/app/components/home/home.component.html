@@ -26,16 +26,16 @@
             <div
               cdkDropList
               #todoList="cdkDropList"
-              [cdkDropListData]="data.todo"
+              [cdkDropListData]="data.pendings"
               [cdkDropListConnectedTo]="[doneList, doList]"
               class="example-list"
               (cdkDropListDropped)="drop($event)">
-              <div class="example-box" *ngFor="let item of data.todo; let i = index" cdkDrag>
+              <div class="example-box" *ngFor="let item of data.pendings; let i = index" cdkDrag>
                 <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg">access_time</mat-icon>
-                {{item}}
-                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg-dropdown" [matMenuTriggerFor]="menu">more_vert</mat-icon>
-                <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="deleteItems('todo', i)"><mat-icon aria-hidden="false" aria-label="Example home icon" color="accent">delete </mat-icon>delete</button>
+                {{item.todo}}
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg-dropdown button" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                <mat-menu #menu="matMenu" >
+                  <button mat-menu-item (click)="deleteItems(item.id)"><mat-icon aria-hidden="false" aria-label="Example home icon" color="accent">delete </mat-icon>delete</button>
                 </mat-menu>
               </div>
             </div>
@@ -47,17 +47,17 @@
             <div
               cdkDropList
               #doList="cdkDropList"
-              [cdkDropListData]="data.do"
+              [cdkDropListData]="data.inProgress"
               [cdkDropListConnectedTo]="[doneList,todoList]"
               class="example-list"
               (cdkDropListDropped)="drop($event)">
-              <div class="example-box" *ngFor="let item of data.do; let i = index" cdkDrag>
+              <div class="example-box" *ngFor="let item of data.inProgress; let i = index" cdkDrag>
                 <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg">hourglass_bottom</mat-icon>
-                {{item}}
+                {{item.todo}}
 
-                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg-dropdown" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg-dropdown button" [matMenuTriggerFor]="menu">more_vert</mat-icon>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="deleteItems('do', i)"><mat-icon aria-hidden="false" aria-label="Example home icon" color="accent">delete </mat-icon>delete</button>
+                  <button mat-menu-item (click)="deleteItems(item.id)"><mat-icon aria-hidden="false" aria-label="Example home icon" color="accent">delete </mat-icon>delete</button>
                 </mat-menu>
               </div>
             </div>
@@ -75,10 +75,10 @@
               (cdkDropListDropped)="drop($event)">
               <div class="example-box" *ngFor="let item of data.done; let i = index" cdkDrag>
                 <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg">done_outline</mat-icon>
-                {{item}}
-                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg-dropdown" [matMenuTriggerFor]="menu">more_vert</mat-icon>
+                {{item.todo}}
+                <mat-icon aria-hidden="false" aria-label="Example home icon" color="accent"  class="svg-dropdown button" [matMenuTriggerFor]="menu">more_vert</mat-icon>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="deleteItems('done', i)"><mat-icon aria-hidden="false" aria-label="Example home icon" color="accent">delete </mat-icon>delete</button>
+                  <button mat-menu-item (click)="deleteItems(item.id)"><mat-icon aria-hidden="false" aria-label="Example home icon" color="accent">delete </mat-icon>delete</button>
                 </mat-menu>
               </div>
             </div>
