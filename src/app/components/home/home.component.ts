@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {MatSnackBar} from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-home',
@@ -27,7 +29,15 @@ export class HomeComponent implements OnInit {
     ]
   };
 
-  constructor() {
+  constructor(private _snackBar: MatSnackBar) {
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 2000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 
   ngOnInit(): void {
@@ -71,13 +81,14 @@ export class HomeComponent implements OnInit {
 
   }
 
-  deleteItems(key: any, value: any, index:any) {
+  deleteItems(key: string, index: number) {
     // @ts-ignore
-    console.log(key, value, index);
-    /*// @ts-ignore
-    console.log(this.data[key].slice(this.data[key].indexOf(value)));
+    this.data[key].splice(index, 1);
+
     // @ts-ignore
-    console.log(key, value, this.data[key]);*/
+    localStorage.setItem(key, JSON.stringify(this.data[key]));
+
+    this.openSnackBar('Görev silindi', 'Kapat');
   }
 
 }
