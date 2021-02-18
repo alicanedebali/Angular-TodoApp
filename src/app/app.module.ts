@@ -13,6 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {FormsModule} from '@angular/forms';
@@ -35,6 +36,7 @@ import {FormsModule} from '@angular/forms';
     DragDropModule,
     FormsModule,
     MatMenuModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
