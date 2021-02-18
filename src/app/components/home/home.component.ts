@@ -71,9 +71,13 @@ export class HomeComponent implements OnInit {
 
   }
 
-  deleteItems(key: any, value: any, index:any) {
+  deleteItems(key: string, index: number) {
     // @ts-ignore
-    console.log(key, value, index);
+    console.log(this.data[key].splice(index, 1));
+    // @ts-ignore
+    console.log(this.data[key], key, index);
+    // @ts-ignore
+    localStorage.setItem(key, JSON.stringify(this.data[key]));
     /*// @ts-ignore
     console.log(this.data[key].slice(this.data[key].indexOf(value)));
     // @ts-ignore
